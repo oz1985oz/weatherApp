@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Herolo Weather Task</span>
+        <div class="btns">
+            <button class="desktop" mat-raised-button [routerLink]="['/home']">Home</button>
+            <button class="desktop" mat-raised-button color="accent" [routerLink]="['/favorites']">Favorites</button>
+            <button class="mobile" mat-icon-button [routerLink]="['/home']" aria-label="home icon">
+                <mat-icon>home</mat-icon>
+            </button>
+            <button class="mobile" mat-icon-button color="accent" [routerLink]="['/favorites']" aria-label="favorite icon">
+                <mat-icon>favorite</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

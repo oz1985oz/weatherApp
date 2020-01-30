@@ -1,0 +1,28 @@
+mat-toolbar-row {
+    display: flex;
+    justify-content: space-between;
+    .btns {
+        button {
+            margin: 8px;
+        }
+        .mobile {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    mat-toolbar-row {
+        .btns {
+            button {
+                margin: 4px;
+            }
+            .desktop {
+                display: none;
+            }
+            .mobile {
+                display: unset;
+            }
+        }
+    }
+  }
