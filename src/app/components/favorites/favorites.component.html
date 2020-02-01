@@ -1,1 +1,7 @@
-<p>favorites works!</p>
+<main>
+    <h2 *ngIf="!favorites || favorites.length == 0">No favorites yet!</h2>
+    <app-favorite
+        *ngFor="let favorite of favorites"
+        [favorite]="favorite"
+    ></app-favorite>
+</main>

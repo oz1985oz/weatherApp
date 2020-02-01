@@ -1,1 +1,9 @@
-<p>favorite works!</p>
+<mat-card>
+    <div class="row">
+        <h4>{{ favorite.locationName }}</h4>
+    </div>
+    <mat-card-content *ngIf="favorite">
+        <p>{{ favorite.Temperature.Metric.Value }}°</p>
+        <p>{{ favorite.WeatherText }}</p>
+    </mat-card-content>
+</mat-card>

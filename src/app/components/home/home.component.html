@@ -1,1 +1,52 @@
-<p>home works!</p>
+<div class="filter">
+  <form>
+    <mat-form-field>
+      <mat-icon>search</mat-icon>
+      <input type="text" placeholder="Search Location" aria-label="Area" matInput [formControl]="searchControl" [matAutocomplete]="auto">
+      <mat-autocomplete class="autocomplete-container" #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+        <mat-option *ngFor="let area of areasRes" [value]="area">
+          {{area.LocalizedName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+<main>
+  <div class="row">
+    <mat-card>
+      <div class="row">
+        <h4>{{selectedAreaName}}</h4>
+        <button *ngIf="!isFavorite" class="mobile" mat-raised-button color="accent" aria-label="add favorite icon" (click)="addToFavorites()">
+          <mat-icon>add</mat-icon>
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button *ngIf="isFavorite" class="mobile" mat-raised-button color="accent" aria-label="add favorite icon" (click)="removeFromFavorites()">
+          <mat-icon>remove</mat-icon>
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
+      <mat-card-content *ngIf="currentWeather">
+        <p>{{currentWeather.Temperature.Metric.Value}}°</p>
+        <p>{{currentWeather.WeatherText}}</p>
+      </mat-card-content>
+    </mat-card>
+    <button *ngIf="!isFavorite" class="desktop" mat-raised-button color="accent" aria-label="add favorite" (click)="addToFavorites()">
+      <mat-icon>add</mat-icon>
+      Add to Favorites
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button *ngIf="isFavorite" class="desktop" mat-raised-button color="accent" aria-label="add favorite" (click)="removeFromFavorites()">
+      <mat-icon>remove</mat-icon>
+      Remove from Favorites
+      <mat-icon>favorite</mat-icon>
+    </button>
+  </div>
+  <h2>{{headline}}</h2>
+  <ng-container *ngIf="dailyForecasts">
+    <mat-card *ngFor="let dailyForecast of dailyForecasts">
+      <app-day-weather
+          [dailyForecast]="dailyForecast"
+      ></app-day-weather>
+    </mat-card>
+  </ng-container>
+</main>

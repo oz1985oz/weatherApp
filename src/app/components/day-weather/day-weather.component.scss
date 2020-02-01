@@ -1,0 +1,12 @@
+mat-card-header,
+mat-card-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    h3,
+    p {
+        width: 100%;
+        text-align: center;
+    }
+}

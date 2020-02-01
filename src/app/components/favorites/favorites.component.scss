@@ -1,0 +1,9 @@
+main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+    app-favorite {
+        margin: 1rem;
+    }
+}

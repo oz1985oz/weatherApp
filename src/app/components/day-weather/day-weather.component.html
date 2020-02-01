@@ -1,1 +1,20 @@
-<p>day-weather works!</p>
+<mat-card-header>
+  <mat-card-title>{{dayName}}</mat-card-title>
+  <mat-card-subtitle>
+    {{_dailyForecast.Date | date: 'dd/MM/yyyy' }}
+
+  </mat-card-subtitle>
+</mat-card-header>
+<mat-card-content>
+  <h3>
+    {{_dailyForecast.Temperature.Minimum.Value | toCelsius: 'C'}}°
+      - 
+    {{_dailyForecast.Temperature.Maximum.Value | toCelsius: 'C'}}°
+  </h3>
+  <p *ngIf="_dailyForecast.Day.HasPrecipitation">
+    At day: {{_dailyForecast.Day.PrecipitationType}}
+  </p>
+  <p *ngIf="_dailyForecast.Night.HasPrecipitation">
+    At night: {{_dailyForecast.Night.PrecipitationType}}
+  </p>
+</mat-card-content>
