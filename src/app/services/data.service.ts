@@ -5,17 +5,21 @@ import { LocalsFromAutoComplete } from 'src/app/models/localsFromAutoComplete';
 import { DailyForecastsRes } from 'src/app/models/DailyForecasts';
 import { CurrentWeather } from 'src/app/models/currentWeather';
 import { CacheService } from './cache.service';
+import { SelectedArea } from '../models/selectedArea';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  endPoint = 'http://dataservice.accuweather.com';
   key: string;
 
   private favoritesSource = new BehaviorSubject<CurrentWeather[]>([]);
   currentFavorites = this.favoritesSource.asObservable();
+
+  private selectedSource = new BehaviorSubject<SelectedArea>(new SelectedArea('215854', 'Tel Aviv'));
+  currentSelected = this.selectedSource.asObservable();
 
   constructor(private http: HttpClient, private cacheService: CacheService) {
     this.getKey();
@@ -27,22 +31,27 @@ export class DataService {
     }
   }
 
+  setSelected(selected: SelectedArea): void {
+    this.selectedSource.next(selected);
+  }
+
   setFavorites(favorites: CurrentWeather[]): void {
     this.favoritesSource.next(favorites);
   }
 
   locationAutocomplete(chars: string): Observable<LocalsFromAutoComplete[]> {
     this.getKey();
-    return this.http.get<LocalsFromAutoComplete[]>(`${this.endPoint}/locations/v1/cities/autocomplete?apikey=${this.key}&q=${chars}`);
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<LocalsFromAutoComplete[]>(`${environment.endPoint}/locations/v1/cities/autocomplete?apikey=${this.key}&q=${chars}`);
   }
 
   getCurrentWeather(locationKey: string): Observable<CurrentWeather[]> {
     this.getKey();
-    return this.http.get<CurrentWeather[]>(`${this.endPoint}/currentconditions/v1/${locationKey}?apikey=${this.key}`);
+    return this.http.get<CurrentWeather[]>(`${environment.endPoint}/currentconditions/v1/${locationKey}?apikey=${this.key}`);
   }
 
   fiveDayDailyForecast(locationKey: string): Observable<DailyForecastsRes> {
     this.getKey();
-    return this.http.get<DailyForecastsRes>(`${this.endPoint}/forecasts/v1/daily/5day/${locationKey}?apikey=${this.key}`);
+    return this.http.get<DailyForecastsRes>(`${environment.endPoint}/forecasts/v1/daily/5day/${locationKey}?apikey=${this.key}`);
   }
 }

@@ -17,13 +17,15 @@ export interface DailyForecast {
         Icon: number;
         IconPhrase: string;
         HasPrecipitation: boolean;
-        PrecipitationType: string;
-        PrecipitationIntensity: string;
+        PrecipitationType?: string;
+        PrecipitationIntensity?: string;
     },
     Night: {
         Icon: number;
         IconPhrase: string;
         HasPrecipitation: boolean;
+        PrecipitationType?: string;
+        PrecipitationIntensity?: string;
     },
     Sources: string[],
     MobileLink: string;

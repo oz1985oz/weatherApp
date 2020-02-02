@@ -3,12 +3,19 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'; 
 
 // material
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatCardModule} from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
+// interseptor
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
+import { ErrorDialogService } from './error-dialog/error-dialog.service';
 
 // general
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +33,7 @@ import { ToCelsiusPipe } from './pipes/to-celsius.pipe';
 @NgModule({
   declarations: [
     AppComponent,
+    ErrorDialogComponent,
     HeaderComponent,
     HomeComponent,
     FavoritesComponent,
@@ -41,6 +49,7 @@ import { ToCelsiusPipe } from './pipes/to-celsius.pipe';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
@@ -48,7 +57,11 @@ import { ToCelsiusPipe } from './pipes/to-celsius.pipe';
     MatCardModule,
     MatIconModule,
   ],
-  providers: [],
+  providers: [
+    ErrorDialogService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
+  ],
+  entryComponents: [ErrorDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

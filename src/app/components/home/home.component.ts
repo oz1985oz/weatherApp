@@ -3,7 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { FormControl } from '@angular/forms';
 import { LocalsFromAutoComplete } from 'src/app/models/localsFromAutoComplete';
 import { debounceTime } from 'rxjs/operators';
-import { DailyForecast, Headline } from 'src/app/models/DailyForecasts';
+import { DailyForecast } from 'src/app/models/DailyForecasts';
 import { CurrentWeather } from 'src/app/models/currentWeather';
 import { ActivatedRoute } from '@angular/router';
 import { CacheService } from 'src/app/services/cache.service';
@@ -39,9 +39,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     const sub = this.searchControl.valueChanges.pipe(
       debounceTime(400))
-    .subscribe(chars => {
-      this.dataService.locationAutocomplete(chars).subscribe(res => this.areasRes = res);
-    });
+      .subscribe(chars => {
+        this.dataService.locationAutocomplete(chars).subscribe(res => this.areasRes = res);
+      });
     this.subs.push(sub);
   }
 
@@ -83,11 +83,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initFiveDayDailyForecast();
-    const sub = this.dataService.currentFavorites.subscribe(data => {
+    const sub1 = this.dataService.currentFavorites.subscribe(data => {
       this.favorites = data;
       this.isInFavorite();
     });
-    this.subs.push(sub);
+    const sub2 = this.dataService.currentSelected.subscribe(data => {
+      this.selectedAreaKey = data.selectedAreaKey;
+      this.selectedAreaName = data.selectedAreaName;
+    });
+    this.subs.push(sub1, sub2);
   }
 
   ngOnDestroy() {
